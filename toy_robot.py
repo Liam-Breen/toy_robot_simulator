@@ -55,6 +55,27 @@ class ToyRobot():
             if y_cord + 1 < 0:
                 self.current_coordinates = (self.current_coordinates[0], y_cord - 1)
 
+    def set_direction(self, direction: str) -> None:
+        """Changes the direction the toy robot is facing by 90 degrees depending on user entry.
+
+        Args:
+            direction (String): The way the direction will change. Either LEFT or RIGHT.
+        """
+
+        directions = ['NORTH', 'EAST', 'SOUTH', 'WEST']
+
+        old_direction_index = directions.index(self.current_direction)
+
+        if 'RIGHT' in direction:
+            new_direction = old_direction_index + 1
+        elif 'LEFT' in direction:
+            new_direction = old_direction_index - 1
+        else:
+            print(f'{direction} is not a valid direction.')
+
+
+        self.current_direction = directions[new_direction]
+
 if __name__ == "__main__":
     debug = True
     toy_robot = None
@@ -83,6 +104,14 @@ if __name__ == "__main__":
             elif command == 'MOVE':
                 toy_robot.move()
                 if debug: assert toy_robot.current_coordinates == (0, 1)
+                if debug: assert toy_robot.current_direction == 'NORTH'
+
+            elif command == 'LEFT':
+                toy_robot.set_direction('LEFT')
+                if debug: assert toy_robot.current_direction == 'WEST'
+
+            elif command == 'RIGHT':
+                toy_robot.set_direction('RIGHT')
                 if debug: assert toy_robot.current_direction == 'NORTH'
 
         command = input("Enter your command: ")
