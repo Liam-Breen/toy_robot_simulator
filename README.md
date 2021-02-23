@@ -81,4 +81,4 @@ Expected output:
 
 Expected output
 
-    2,4,NORTH
+    3,3,NORTH
