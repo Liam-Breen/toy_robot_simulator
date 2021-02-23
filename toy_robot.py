@@ -66,14 +66,15 @@ class ToyRobot():
 
         old_direction_index = directions.index(self.current_direction)
 
+
         if 'RIGHT' in direction:
             new_direction = old_direction_index + 1
+            if new_direction > 3:
+                new_direction = 0
         elif 'LEFT' in direction:
             new_direction = old_direction_index - 1
         else:
             print(f'{direction} is not a valid direction.')
-
-
         self.current_direction = directions[new_direction]
 
 if __name__ == "__main__":
