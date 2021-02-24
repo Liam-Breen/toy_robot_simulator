@@ -82,3 +82,14 @@ Expected output:
 Expected output
 
     3,3,NORTH
+    
+    
+    
+
+Next Steps
+-----------
+
+- Handle multiple boards with different dimensions.
+- Add obstacles on to the board
+- Have multiple toy robots on one board
+- Add pathfinding
