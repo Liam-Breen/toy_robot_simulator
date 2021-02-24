@@ -10,10 +10,13 @@ class ToyRobot():
     def __init__(self) -> None:
         self.current_coordinates = None
         self.current_direction = None
+        self.current_table_top = None
 
     def report(self) -> tuple:
         return f"{self.current_coordinates[0]},{self.current_coordinates[1]},{self.current_direction}"
 
+
+    #TODO
     def place(self, command) -> None:
         """Sets the current_coordinates and current_direction
 
@@ -21,15 +24,15 @@ class ToyRobot():
             command (String): The place command the user has entered
         """
 
-        try:
-            command = command.split(' ')
-            command = command[1].split(',')
-            coordinates = (int(command[0]), int(command[1]))
-            direction = command[2]
-        except:
-            print('This was not a valid place command')
-            command = input('Enter your command: ')
-            self.place(command)
+        command = command.split(' ')
+        command = command[1].split(',')
+        coordinates = (int(command[0]), int(command[1]))
+        direction = command[2]
+
+        #! Add handling of incorrect entries
+        # print('This was not a valid place command')
+        # command = input('Enter your command: ')
+        # self.place(command)
 
         if direction not in ['NORTH', 'SOUTH', 'EAST', 'WEST']:
             print(f'{direction} is not a valid direction.')
@@ -44,7 +47,7 @@ class ToyRobot():
 
         if self.current_direction == 'EAST':
             x_cord = self.current_coordinates[0]
-            if x_cord + 1 < 5:
+            if x_cord + 1 < self.current_table_top.rows:
                 self.current_coordinates = (x_cord + 1, self.current_coordinates[1])
 
         elif self.current_direction == 'WEST':
@@ -54,7 +57,7 @@ class ToyRobot():
 
         elif self.current_direction == 'NORTH':
             y_cord = self.current_coordinates[1]
-            if y_cord + 1 < 5:
+            if y_cord + 1 < self.current_table_top.columns:
                 self.current_coordinates = (self.current_coordinates[0], y_cord + 1)
 
         elif self.current_direction == 'SOUTH':
@@ -85,7 +88,7 @@ class ToyRobot():
         self.current_direction = directions[new_direction]
 
 if __name__ == "__main__":
-    debug = True
+    debug = False
     toy_robot = None
     command = input("Enter your first command: ")
 
@@ -99,8 +102,19 @@ if __name__ == "__main__":
                 toy_robot.place(command)
 
             else:
+
+                # Instantiate the default 5x5 TableTop
+                #? How woud I handle multiple TableTops
+
+                tabletop_one = TableTop()
+                tabletop_one.rows = 5
+                tabletop_one.columns = 5
+
+                #? How would I handle multiple ToyRobots
                 toy_robot = ToyRobot()
+                toy_robot.current_table_top = tabletop_one
                 toy_robot.place(command)
+
                 if debug: assert toy_robot.current_coordinates == (0, 0)
                 if debug: assert toy_robot.current_direction == 'NORTH'
 
