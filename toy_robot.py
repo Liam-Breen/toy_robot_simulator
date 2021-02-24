@@ -40,7 +40,6 @@ class ToyRobot():
             command = input("Enter your command: ")
             self.call_command(command)
 
-    #TODO Add handling of incorrect entries
     def place(self, command) -> None:
         """Sets the current_coordinates and current_direction
 
@@ -50,16 +49,20 @@ class ToyRobot():
 
         command = command.split(' ')
         command = command[1].split(',')
-        coordinates = (int(command[0]), int(command[1]))
-        direction = command[2]
+        try:
+            coordinates = (int(command[0]), int(command[1]))
+            direction = command[2]
 
-        if direction not in ['NORTH', 'SOUTH', 'EAST', 'WEST']:
-            print(f'{direction} is not a valid direction.')
-        elif coordinates[0] >= self.current_table_top.rows or coordinates[1] >= self.current_table_top.columns or (coordinates[0] or coordinates[1]) < 0:
-            print(f'The coordinates, {coordinates},  are not valid')
-        else:
-            self.current_coordinates = coordinates
-            self.current_direction = direction
+            if direction not in ['NORTH', 'SOUTH', 'EAST', 'WEST']:
+                print(f'{direction} is not a valid direction.')
+            elif coordinates[0] >= self.current_table_top.rows or coordinates[1] >= self.current_table_top.columns or (coordinates[0] or coordinates[1]) < 0:
+                print(f'The coordinates, {coordinates},  are not valid')
+            else:
+                self.current_coordinates = coordinates
+                self.current_direction = direction
+        except:
+            # Printing warnings for bad inputs when possible, ignore if that's not possible.
+            pass
 
     def move(self) -> None:
         """Moves the toy robot forward one spot depending on the direction it faces"""
