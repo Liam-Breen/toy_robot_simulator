@@ -110,7 +110,7 @@ class ToyRobot():
         self.current_direction = directions[new_direction]
 
 if __name__ == "__main__":
-    debug = False
+    debug = True
 
     # Instantiate the default 5x5 TableTop
     #? How would I handle multiple TableTops
@@ -123,10 +123,29 @@ if __name__ == "__main__":
     toy_robot = ToyRobot()
     toy_robot.current_table_top = tabletop_one
 
-    command = input("Enter your command: ")
-    place = command.split(' ')[0]
-    while place != 'PLACE':
+    if not debug:
         command = input("Enter your command: ")
         place = command.split(' ')[0]
+        while place != 'PLACE':
+            command = input("Enter your command: ")
+            place = command.split(' ')[0]
+        else:
+            toy_robot.call_command(command)
+
     else:
-        toy_robot.call_command(command)
+
+        toy_robot.place('PLACE 0,0,NORTH')
+        toy_robot.move()
+        assert toy_robot.report() == '0,1,NORTH'
+
+        toy_robot.place('PLACE 0,0,NORTH')
+        toy_robot.set_direction('LEFT')
+        assert toy_robot.report() == '0,0,WEST'
+
+        toy_robot.place('PLACE 1,2,EAST')
+        toy_robot.move()
+        toy_robot.move()
+        toy_robot.set_direction('LEFT')
+        toy_robot.move()
+        assert toy_robot.report() == '3,3,NORTH'
+
