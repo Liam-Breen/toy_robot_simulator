@@ -15,8 +15,12 @@ class ToyRobot():
     def report(self) -> tuple:
         return f"{self.current_coordinates[0]},{self.current_coordinates[1]},{self.current_direction}"
 
-    def call_command(self, command) -> None:
+    def call_command(self, command: str) -> None:
+        """Takes a user input and calls the correct command.
 
+        Args:
+            command (str): User Input
+        """
         place = command.split(' ')
         if place[0] == 'PLACE':
             self.place(command)
