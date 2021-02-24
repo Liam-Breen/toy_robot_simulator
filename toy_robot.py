@@ -21,6 +21,7 @@ class ToyRobot():
         Args:
             command (str): User Input
         """
+
         place = command.split(' ')
         if place[0] == 'PLACE':
             self.place(command)
@@ -44,7 +45,7 @@ class ToyRobot():
         """Sets the current_coordinates and current_direction
 
         Args:
-            command (String): The place command the user has entered
+            command (str): The place command the user has entered
         """
 
         command = command.split(' ')
@@ -87,7 +88,7 @@ class ToyRobot():
         """Changes the direction the toy robot is facing by 90 degrees depending on user entry.
 
         Args:
-            direction (String): The way the direction will change. Either LEFT or RIGHT.
+            direction (str): The way the direction will change. Either LEFT or RIGHT.
         """
 
         directions = ['NORTH', 'EAST', 'SOUTH', 'WEST']
