@@ -62,7 +62,7 @@ class ToyRobot():
 
         elif self.current_direction == 'SOUTH':
             y_cord = self.current_coordinates[1]
-            if y_cord + 1 >= 0:
+            if y_cord - 1 >= 0:
                 self.current_coordinates = (self.current_coordinates[0], y_cord - 1)
 
     def set_direction(self, direction: str) -> None:
@@ -104,7 +104,7 @@ if __name__ == "__main__":
             else:
 
                 # Instantiate the default 5x5 TableTop
-                #? How woud I handle multiple TableTops
+                #? How would I handle multiple TableTops
 
                 tabletop_one = TableTop()
                 tabletop_one.rows = 5
