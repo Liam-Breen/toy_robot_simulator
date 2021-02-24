@@ -15,8 +15,27 @@ class ToyRobot():
     def report(self) -> tuple:
         return f"{self.current_coordinates[0]},{self.current_coordinates[1]},{self.current_direction}"
 
+    def call_command(self, command) -> None:
 
-    #TODO
+        place = command.split(' ')
+        if place[0] == 'PLACE':
+            self.place(command)
+        elif self.current_direction and self.current_coordinates:
+            if command == 'REPORT':
+                print(self.report())
+            elif command == 'MOVE':
+                self.move()
+            elif command == 'LEFT':
+                self.set_direction('LEFT')
+            elif command == 'RIGHT':
+                self.set_direction('RIGHT')
+
+        more_commands = True
+        while more_commands:
+            command = input("Enter your command: ")
+            self.call_command(command)
+
+    #TODO Add handling of incorrect entries
     def place(self, command) -> None:
         """Sets the current_coordinates and current_direction
 
@@ -29,14 +48,9 @@ class ToyRobot():
         coordinates = (int(command[0]), int(command[1]))
         direction = command[2]
 
-        #! Add handling of incorrect entries
-        # print('This was not a valid place command')
-        # command = input('Enter your command: ')
-        # self.place(command)
-
         if direction not in ['NORTH', 'SOUTH', 'EAST', 'WEST']:
             print(f'{direction} is not a valid direction.')
-        elif (coordinates[0] or coordinates[1]) > 4 or (coordinates[0] or coordinates[1]) < 0:
+        elif coordinates[0] >= self.current_table_top.rows or coordinates[1] >= self.current_table_top.columns or (coordinates[0] or coordinates[1]) < 0:
             print(f'The coordinates, {coordinates},  are not valid')
         else:
             self.current_coordinates = coordinates
@@ -89,51 +103,22 @@ class ToyRobot():
 
 if __name__ == "__main__":
     debug = False
-    toy_robot = None
-    command = input("Enter your first command: ")
 
-    while command:
+    # Instantiate the default 5x5 TableTop
+    #? How would I handle multiple TableTops
 
-        if 'PLACE' in command:
+    tabletop_one = TableTop()
+    tabletop_one.rows = 5
+    tabletop_one.columns = 5
 
-            if debug: command = 'PLACE 0,0,NORTH'
+    #? How would I handle multiple ToyRobots
+    toy_robot = ToyRobot()
+    toy_robot.current_table_top = tabletop_one
 
-            if toy_robot:
-                toy_robot.place(command)
-
-            else:
-
-                # Instantiate the default 5x5 TableTop
-                #? How would I handle multiple TableTops
-
-                tabletop_one = TableTop()
-                tabletop_one.rows = 5
-                tabletop_one.columns = 5
-
-                #? How would I handle multiple ToyRobots
-                toy_robot = ToyRobot()
-                toy_robot.current_table_top = tabletop_one
-                toy_robot.place(command)
-
-                if debug: assert toy_robot.current_coordinates == (0, 0)
-                if debug: assert toy_robot.current_direction == 'NORTH'
-
-        elif toy_robot:
-
-            if command == 'REPORT':
-                print(toy_robot.report())
-
-            elif command == 'MOVE':
-                toy_robot.move()
-                if debug: assert toy_robot.current_coordinates == (0, 1)
-                if debug: assert toy_robot.current_direction == 'NORTH'
-
-            elif command == 'LEFT':
-                toy_robot.set_direction('LEFT')
-                if debug: assert toy_robot.current_direction == 'WEST'
-
-            elif command == 'RIGHT':
-                toy_robot.set_direction('RIGHT')
-                if debug: assert toy_robot.current_direction == 'NORTH'
-
+    command = input("Enter your command: ")
+    place = command.split(' ')[0]
+    while place != 'PLACE':
         command = input("Enter your command: ")
+        place = command.split(' ')[0]
+    else:
+        toy_robot.call_command(command)
