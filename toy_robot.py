@@ -1,3 +1,10 @@
+class TableTop():
+
+    def __init__(self) -> None:
+        self.rows = None
+        self.columns = None
+
+
 class ToyRobot():
 
     def __init__(self) -> None:
@@ -42,7 +49,7 @@ class ToyRobot():
 
         elif self.current_direction == 'WEST':
             x_cord = self.current_coordinates[0]
-            if x_cord - 1 < 0:
+            if x_cord - 1 >= 0:
                 self.current_coordinates = (x_cord - 1, self.current_coordinates[1])
 
         elif self.current_direction == 'NORTH':
@@ -52,7 +59,7 @@ class ToyRobot():
 
         elif self.current_direction == 'SOUTH':
             y_cord = self.current_coordinates[1]
-            if y_cord + 1 < 0:
+            if y_cord + 1 >= 0:
                 self.current_coordinates = (self.current_coordinates[0], y_cord - 1)
 
     def set_direction(self, direction: str) -> None:
